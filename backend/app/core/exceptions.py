@@ -28,5 +28,5 @@ class ForbiddenError(AppError):
     default_message = "You do not have access to this resource"
 
 class ValidationFailedError(AppError):
-    status_code = status.HTTP_422_UNPROCESSABLE_ENTITY
+    status_code = status.HTTP_422_UNPROCESSABLE_CONTENT
     default_message = "Route failed validation"
