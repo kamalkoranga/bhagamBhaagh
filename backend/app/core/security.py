@@ -8,27 +8,27 @@ from app.core.config import settings
 
 MAX_BCRYPT_BYTES = 72
 
-# hashes plain password using bcrypt
 def hash_password(plain_password: str) -> str:
+    """Hash a plain-text password using bcrypt."""
     password_bytes = plain_password.encode("utf-8")[:MAX_BCRYPT_BYTES]
     return bcrypt.hashpw(
         password_bytes,
         bcrypt.gensalt()
     ).decode("utf-8")
 
-# verify plain password with stored hash
 def verify_password(plain_password: str, password_hash: str) -> bool:
+    """Verify a plain-text password against a stored bcrypt hash."""
     password_bytes = plain_password.encode("utf-8")[:MAX_BCRYPT_BYTES]
     return bcrypt.checkpw(
         password_bytes,
         password_hash.encode("utf-8")
     )
 
-# Creates signed jwt for subject -> user.id
 def create_access_token(
     subject: str,
     additional_claims: dict[str, Any] | None = None
 ) -> str:
+    """Create a signed JWT access token for a user."""
     expiration_time = datetime.now(UTC) + timedelta(
         minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES
     )
@@ -44,8 +44,8 @@ def create_access_token(
         algorithm=settings.JWT_ALGORITHM
     )
 
-# decode and validate jwt access token
 def decode_access_token(token: str) -> dict[str, Any] | None:
+    """Decode and validate a JWT access token."""
     try:
         return jwt.decode(
             token,
