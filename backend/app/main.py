@@ -1,7 +1,11 @@
 from fastapi import FastAPI
 
+from app.database.base import import_all_models
 from app.modules.auth.router import router as auth_router
 from app.modules.map.router import router as map_router
+
+import_all_models()
+
 app = FastAPI(
     title="BhagamBhaagh API",
     version="0.1.0"
