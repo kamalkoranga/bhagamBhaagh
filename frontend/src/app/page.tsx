@@ -1,9 +1,8 @@
-import HomePage from "@/pages/home/HomePage";
+import { redirect } from 'next/navigation';
 
 export default function Home() {
-  return (
-    <div className="h-dvh w-full">
-      <HomePage className="h-screen w-full" />
-    </div>
-  );
+  // redirect('/dashboard');
+  return <>
+    <h1>Hello World!</h1>
+  </>;
 }
