@@ -1,26 +1,117 @@
-@import "tailwindcss";
+@import "leaflet/dist/leaflet.css";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+  /* Architectural Z-Index Scale */
+  --z-map: 0;
+  --z-hud: 100;
+  --z-modal: 1000;
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  /* Basic Colors */
+  --bg-color: #f9fafb;
+  --text-color: #111827;
+  --border-color: #d1d5db;
+  --primary-color: #2563eb;
+  --error-color: #ef4444;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Reusable Form Styles */
+.auth-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 1rem;
+}
+
+.auth-form {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-group input {
+  padding: 0.75rem;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.btn-primary {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.btn-primary:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.error-message {
+  color: var(--error-color);
+  background-color: #fef2f2;
+  padding: 0.75rem;
+  border-radius: 4px;
+  border: 1px solid #fecaca;
+  font-size: 0.875rem;
+}
+
+/* --- Mobile Polish Additions --- */
+
+/* 1. Prevent pull-to-refresh and browser swiping gestures over the map */
+.leaflet-container {
+  touch-action: none;
+}
+
+/* 2. Optimize forms for small screens (removes boxed look, uses full screen) */
+@media (max-width: 600px) {
+  .auth-form {
+    padding: 1.5rem;
+    border-radius: 0;
+    box-shadow: none;
+    height: 100vh;
+    justify-content: center;
+  }
+
+  /* Stack the dashboard stats cleanly on small screens */
+  div[style*="gap: 2rem"] {
+    gap: 1rem !important;
+    flex-wrap: wrap;
+    font-size: 0.875rem;
+  }
+}
+
+/* 3. Ensure buttons meet mobile touch-target minimums (44px) */
+button {
+  min-height: 44px;
 }
